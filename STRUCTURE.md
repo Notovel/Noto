@@ -1,174 +1,191 @@
 # Noto Project Structure
 
 ```
-  noto/
-  ├── Cargo.toml                    # Workspace configuration
-  ├── README.md
-  ├── docs/
-  │   ├── architecture.md
-  │   ├── protocol.md
-  │   └── deployment.md
-  │
-  ├── crates/
-  │   ├── vel-core/                 # 🧠 Core editor logic (platform-agnostic)
-  │   │   ├── Cargo.toml
-  │   │   └── src/
-  │   │       ├── lib.rs
-  │   │       ├── editor/           # Editor state management
-  │   │       │   ├── mod.rs
-  │   │       │   ├── document.rs   # Document/buffer management
-  │   │       │   ├── cursor.rs     # Cursor and selection handling
-  │   │       │   ├── history.rs    # Undo/redo system
-  │   │       │   └── workspace.rs  # Multi-file workspace
-  │   │       ├── syntax/           # Syntax highlighting & parsing
-  │   │       │   ├── mod.rs
-  │   │       │   ├── treesitter.rs # Tree-sitter integration
-  │   │       │   └── themes.rs     # Color themes
-  │   │       ├── search/           # Search functionality
-  │   │       │   ├── mod.rs
-  │   │       │   ├── local.rs      # In-file search
-  │   │       │   └── query.rs      # Search query parsing
-  │   │       ├── lsp/              # Language Server Protocol
-  │   │       │   ├── mod.rs
-  │   │       │   ├── client.rs     # LSP client interface
-  │   │       │   └── types.rs      # LSP message types
-  │   │       └── utils/
-  │   │           ├── mod.rs
-  │   │           ├── rope.rs       # Text rope data structure
-  │   │           └── encoding.rs   # Text encoding handling
-  │   │
-  │   ├── vel-render/               # 🎨 Cross-platform rendering (wgpu)
-  │   │   ├── Cargo.toml
-  │   │   └── src/
-  │   │       ├── lib.rs
-  │   │       ├── renderer.rs       # Main renderer
-  │   │       ├── text/             # Text rendering
-  │   │       │   ├── mod.rs
-  │   │       │   ├── glyph.rs      # Glyph management
-  │   │       │   └── layout.rs     # Text layout
-  │   │       ├── ui/               # UI rendering primitives
-  │   │       │   ├── mod.rs
-  │   │       │   ├── widgets.rs    # Basic UI widgets
-  │   │       │   └── layout.rs     # Layout system
-  │   │       └── shaders/          # WGSL shaders
-  │   │           ├── text.wgsl
-  │   │           └── ui.wgsl
-  │   │
-  │   ├── vel-gui/                  # 🖼️ Retained GUI framework
-  │   │   ├── Cargo.toml
-  │   │   └── src/
-  │   │       ├── lib.rs
-  │   │       ├── widget/           # Widget system
-  │   │       │   ├── mod.rs
-  │   │       │   ├── text_editor.rs
-  │   │       │   ├── file_tree.rs
-  │   │       │   ├── menu_bar.rs
-  │   │       │   └── status_bar.rs
-  │   │       ├── layout/           # Layout management
-  │   │       │   ├── mod.rs
-  │   │       │   └── flex.rs       # Flexbox-like layout
-  │   │       └── event/            # Event handling
-  │   │           ├── mod.rs
-  │   │           └── keyboard.rs
-  │   │
-  │   ├── noto-protocol/            # 🔌 WebSocket protocol definitions
-  │   │   ├── Cargo.toml
-  │   │   └── src/
-  │   │       ├── lib.rs
-  │   │       ├── messages/         # Protocol messages
-  │   │       │   ├── mod.rs
-  │   │       │   ├── file_ops.rs   # File operations
-  │   │       │   ├── project.rs    # Project management
-  │   │       │   ├── lsp.rs        # LSP message forwarding
-  │   │       │   ├── build.rs      # Build system messages
-  │   │       │   └── search.rs     # Search messages
-  │   │       └── codec.rs          # Message serialization
-  │   │
-  │   ├── vel-native/               # 🖥️ Native desktop application
-  │   │   ├── Cargo.toml
-  │   │   └── src/
-  │   │       ├── main.rs
-  │   │       ├── app.rs            # Main application
-  │   │       ├── window.rs         # Window management
-  │   │       ├── fs/               # Local filesystem operations
-  │   │       │   ├── mod.rs
-  │   │       │   ├── project.rs    # Local project management
-  │   │       │   └── watcher.rs    # File system watching
-  │   │       └── lsp/              # Local LSP management
-  │   │           ├── mod.rs
-  │   │           └── server.rs     # LSP server spawning
-  │   │
-  │   ├── vel-web/                  # 🌐 WebAssembly web client
-  │   │   ├── Cargo.toml
-  │   │   ├── index.html
-  │   │   ├── style.css
-  │   │   └── src/
-  │   │       ├── lib.rs
-  │   │       ├── app.rs            # Web application entry
-  │   │       ├── websocket.rs      # WebSocket client
-  │   │       └── bindings/         # Web API bindings
-  │   │           ├── mod.rs
-  │   │           └── dom.rs        # DOM manipulation
-  │   │
-  │   ├── noto-server/              # 🖧 Web backend server
-  │   │   ├── Cargo.toml
-  │   │   └── src/
-  │   │       ├── main.rs
-  │   │       ├── server.rs         # HTTP/WebSocket server
-  │   │       ├── auth/             # Authentication
-  │   │       │   ├── mod.rs
-  │   │       │   ├── users.rs      # User management
-  │   │       │   ├── sessions.rs   # Session handling
-  │   │       │   └── crypto.rs     # Password hashing
-  │   │       ├── projects/         # Project management
-  │   │       │   ├── mod.rs
-  │   │       │   ├── manager.rs    # Project lifecycle
-  │   │       │   ├── fs.rs         # Server filesystem ops
-  │   │       │   └── permissions.rs# Access control
-  │   │       ├── lsp/              # Language Server management
-  │   │       │   ├── mod.rs
-  │   │       │   ├── manager.rs    # LSP server lifecycle
-  │   │       │   └── proxy.rs      # LSP message proxying
-  │   │       ├── build/            # Build system integration
-  │   │       │   ├── mod.rs
-  │   │       │   ├── sandbox.rs    # Sandboxed execution
-  │   │       │   └── runners/      # Specific build runners
-  │   │       │       ├── mod.rs
-  │   │       │       ├── cargo.rs
-  │   │       │       ├── npm.rs
-  │   │       │       └── generic.rs
-  │   │       ├── search/           # Server-side search
-  │   │       │   ├── mod.rs
-  │   │       │   └── indexer.rs    # File indexing
-  │   │       └── websocket/        # WebSocket handling
-  │   │           ├── mod.rs
-  │   │           ├── handler.rs    # Message routing
-  │   │           └── session.rs    # Connection management
-  │   │
-  │   └── noto-sandbox/             # 🔒 Build system sandboxing
-  │       ├── Cargo.toml
-  │       └── src/
-  │           ├── lib.rs
-  │           ├── container.rs      # Container/chroot management
-  │           ├── limits.rs         # Resource limiting
-  │           └── monitor.rs        # Process monitoring
-  │
-  ├── assets/                       # Static assets
-  │   ├── fonts/
-  │   ├── icons/
-  │   └── themes/
-  │       ├── dark.toml
-  │       └── light.toml
-  │
-  ├── scripts/                      # Build and deployment scripts
-  │   ├── build-web.sh
-  │   ├── build-native.sh
-  │   └── deploy.sh
-  │
-  └── tests/                        # Integration tests
-      ├── protocol/
-      ├── editor/
-      └── e2e/
+noto/
+├── Cargo.toml                    # Workspace configuration
+├── README.md
+├── docs/
+│   ├── architecture.md
+│   ├── protocol.md
+│   └── deployment.md
+│
+├── crates/
+│   ├── vel-core/                 # 🧠 Core editor logic (platform-agnostic)
+│   │   ├── Cargo.toml
+│   │   └── src/
+│   │       ├── lib.rs
+│   │       ├── editor/           # Editor state management
+│   │       │   ├── mod.rs
+│   │       │   ├── document.rs   # Document/buffer management
+│   │       │   ├── cursor.rs     # Cursor and selection handling
+│   │       │   ├── history.rs    # Undo/redo system
+│   │       │   └── workspace.rs  # Multi-file workspace
+│   │       ├── syntax/           # Syntax highlighting & parsing
+│   │       │   ├── mod.rs
+│   │       │   ├── treesitter.rs # Tree-sitter integration
+│   │       │   └── themes.rs     # Color themes
+│   │       ├── search/           # Search functionality
+│   │       │   ├── mod.rs
+│   │       │   ├── local.rs      # In-file search
+│   │       │   └── query.rs      # Search query parsing
+│   │       ├── lsp/              # Language Server Protocol
+│   │       │   ├── mod.rs
+│   │       │   ├── client.rs     # LSP client interface
+│   │       │   └── types.rs      # LSP message types
+│   │       └── utils/
+│   │           ├── mod.rs
+│   │           ├── rope.rs       # Text rope data structure
+│   │           └── encoding.rs   # Text encoding handling
+│   │
+│   ├── vel-render/               # 🎨 Cross-platform rendering (wgpu)
+│   │   ├── Cargo.toml
+│   │   └── src/
+│   │       ├── lib.rs
+│   │       ├── renderer.rs       # Main renderer
+│   │       ├── text/             # Text rendering
+│   │       │   ├── mod.rs
+│   │       │   ├── glyph.rs      # Glyph management
+│   │       │   └── layout.rs     # Text layout
+│   │       ├── ui/               # UI rendering primitives
+│   │       │   ├── mod.rs
+│   │       │   ├── widgets.rs    # Basic UI widgets
+│   │       │   └── layout.rs     # Layout system
+│   │       └── shaders/          # WGSL shaders
+│   │           ├── text.wgsl
+│   │           └── ui.wgsl
+│   │
+│   ├── vel-gui/                  # 🖼️ Retained GUI framework
+│   │   ├── Cargo.toml
+│   │   └── src/
+│   │       ├── lib.rs
+│   │       ├── widget/           # Widget system
+│   │       │   ├── mod.rs
+│   │       │   ├── text_editor.rs
+│   │       │   ├── file_tree.rs
+│   │       │   ├── menu_bar.rs
+│   │       │   └── status_bar.rs
+│   │       ├── layout/           # Layout management
+│   │       │   ├── mod.rs
+│   │       │   └── flex.rs       # Flexbox-like layout
+│   │       └── event/            # Event handling
+│   │           ├── mod.rs
+│   │           └── keyboard.rs
+│   │
+│   ├── noto-protocol/            # 🔌 WebSocket protocol definitions
+│   │   ├── Cargo.toml
+│   │   └── src/
+│   │       ├── lib.rs
+│   │       ├── messages/         # Protocol messages
+│   │       │   ├── mod.rs
+│   │       │   ├── file_ops.rs   # File operations
+│   │       │   ├── project.rs    # Project management
+│   │       │   ├── lsp.rs        # LSP message forwarding
+│   │       │   ├── build.rs      # Build system messages
+│   │       │   └── search.rs     # Search messages
+│   │       └── codec.rs          # Message serialization
+│   │
+│   ├── vel-native/               # 🖥️ Native desktop application
+│   │   ├── Cargo.toml
+│   │   └── src/
+│   │       ├── main.rs
+│   │       ├── app.rs            # Main application
+│   │       ├── window.rs         # Window management
+│   │       ├── fs/               # Local filesystem operations
+│   │       │   ├── mod.rs
+│   │       │   ├── project.rs    # Local project management
+│   │       │   └── watcher.rs    # File system watching
+│   │       └── lsp/              # Local LSP management
+│   │           ├── mod.rs
+│   │           └── server.rs     # LSP server spawning
+│   │
+│   ├── vel-web/                  # 🌐 WebAssembly web client
+│   │   ├── Cargo.toml
+│   │   ├── index.html
+│   │   ├── style.css
+│   │   └── src/
+│   │       ├── lib.rs
+│   │       ├── app.rs            # Web application entry
+│   │       ├── websocket.rs      # WebSocket client
+│   │       └── bindings/         # Web API bindings
+│   │           ├── mod.rs
+│   │           └── dom.rs        # DOM manipulation
+│   │
+│   ├── noto-server/              # 🖧 Web backend server
+│   │   ├── Cargo.toml
+│   │   └── src/
+│   │       ├── main.rs
+│   │       ├── server.rs         # HTTP/WebSocket server
+│   │       ├── auth/             # Authentication
+│   │       │   ├── mod.rs
+│   │       │   ├── users.rs      # User management
+│   │       │   ├── sessions.rs   # Session handling
+│   │       │   └── crypto.rs     # Password hashing
+│   │       ├── admin/            # Admin panel & management
+│   │       │   ├── mod.rs
+│   │       │   ├── handlers.rs   # Admin API endpoints
+│   │       │   ├── dashboard.rs  # System metrics & overview
+│   │       │   ├── users.rs      # User administration
+│   │       │   ├── projects.rs   # Project administration
+│   │       │   ├── settings.rs   # Server configuration
+│   │       │   └── logs.rs       # System logs viewer
+│   │       ├── config/           # Server configuration
+│   │       │   ├── mod.rs
+│   │       │   ├── settings.rs   # Configuration management
+│   │       │   └── validation.rs # Config validation
+│   │       ├── projects/         # Project management
+│   │       │   ├── mod.rs
+│   │       │   ├── manager.rs    # Project lifecycle
+│   │       │   ├── fs.rs         # Server filesystem ops
+│   │       │   └── permissions.rs# Access control
+│   │       ├── lsp/              # Language Server management
+│   │       │   ├── mod.rs
+│   │       │   ├── manager.rs    # LSP server lifecycle
+│   │       │   └── proxy.rs      # LSP message proxying
+│   │       ├── build/            # Build system integration
+│   │       │   ├── mod.rs
+│   │       │   ├── sandbox.rs    # Sandboxed execution
+│   │       │   └── runners/      # Specific build runners
+│   │       │       ├── mod.rs
+│   │       │       ├── cargo.rs
+│   │       │       ├── npm.rs
+│   │       │       └── generic.rs
+│   │       ├── search/           # Server-side search
+│   │       │   ├── mod.rs
+│   │       │   └── indexer.rs    # File indexing
+│   │       └── websocket/        # WebSocket handling
+│   │           ├── mod.rs
+│   │           ├── handler.rs    # Message routing
+│   │           └── session.rs    # Connection management
+│   │
+│   └── noto-sandbox/             # 🔒 Build system sandboxing
+│       ├── Cargo.toml
+│       └── src/
+│           ├── lib.rs
+│           ├── container.rs      # Container/chroot management
+│           ├── limits.rs         # Resource limiting
+│           └── monitor.rs        # Process monitoring
+│
+├── assets/                       # Static assets
+│   ├── fonts/
+│   ├── icons/
+│   ├── themes/
+│   │   ├── dark.toml
+│   │   └── light.toml
+│   └── admin/                    # Admin panel assets
+│       ├── admin.html
+│       ├── admin.css
+│       ├── admin.js
+│       └── charts.js
+│
+├── scripts/                      # Build and deployment scripts
+│   ├── build-web.sh
+│   ├── build-native.sh
+│   └── deploy.sh
+│
+└── tests/                        # Integration tests
+    ├── protocol/
+    ├── editor/
+    └── e2e/
 ```
 
 ## Key Design Decisions
