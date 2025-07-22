@@ -9,3 +9,5 @@ Vel for web is run in the Browser which then communicates via websockets to the 
 The runtime 'Noto' exists only when build for web.
 
 Vel for native is solely run on the maschine without any "extra" backend like the web app.
+
+Read more in the [docs](docs/Architecture).
