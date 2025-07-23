@@ -10,4 +10,4 @@ The runtime 'Noto' exists only when build for web.
 
 Vel for native is solely run on the maschine without any "extra" backend like the web app.
 
-Read more in the [docs](docs/Architecture).
+Read more in the [docs](docs/Architecture.md).
