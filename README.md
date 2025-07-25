@@ -1,5 +1,5 @@
 # Noto
-Vel/Veltext is a fast and easy to use Text-Editor like Notepad++ written in Rust for native and web
+Vel/Veltext is a fast and easy to use Text-Editor like inspired by Notepad++ and InteliJ, written in Rust for native and web
 
 ## Vel? Why is the repo called Noto then?
 "Vel" or "Valtext" is the editor itself. Noto is the project containing Vel and a web-server that can be used to run Vel (like codespaces but on the browser)
