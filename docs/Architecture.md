@@ -1,5 +1,43 @@
 # Noto Project Structure
 
+```mermaid
+---
+config:
+  theme: redux-dark
+  layout: fixed
+  look: classic
+---
+flowchart TB
+    NSA("noto:sandbox") --> NC("novo:core")
+    NC --> NS("novo:server") & VN["vel:native"]
+    NS -.-> NP("novo:protocol")
+    NP -.-> VW["vel:web"]
+    VC("vel:core") --> VW & VN
+    VR("vel:render") --> VG("vel:gui")
+    VG --> VC
+    VN@{ shape: div-proc}
+    VW@{ shape: div-proc}
+    style NSA color:#2962FF
+    style NC color:#2962FF
+    style NS color:#2962FF
+    style VN stroke-width:2px,stroke-dasharray: 0,color:#FF6D00
+    style NP stroke-width:2px,stroke-dasharray: 2,color:#FFD600
+    style VW stroke-width:2px,stroke-dasharray: 0,color:#FF6D00
+    style VC color:#AA00FF
+    style VR color:#AA00FF
+    style VG color:#AA00FF
+    linkStyle 0 stroke:#2962FF,fill:none
+    linkStyle 1 stroke:#2962FF,fill:none
+    linkStyle 2 stroke:#2962FF,fill:none
+    linkStyle 3 stroke:#FFD600,fill:none
+    linkStyle 4 stroke:#FFD600,fill:none
+    linkStyle 5 stroke:#AA00FF,fill:none
+    linkStyle 6 stroke:#AA00FF,fill:none
+    linkStyle 7 stroke:#AA00FF,fill:none
+    linkStyle 8 stroke:#AA00FF,fill:none
+```
+
+Possible folder layout: 
 ```
 noto/
 ├── Cargo.toml                    # Workspace configuration
