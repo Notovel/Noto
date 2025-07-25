@@ -15,14 +15,16 @@ flowchart TB
     VC("vel:core") --> VW & VN
     VR("vel:render") --> VG("vel:gui")
     VG --> VC
-    VN@{ shape: div-proc}
-    VW@{ shape: div-proc}
+    VN@{ shape: div-proc }
+    VW@{ shape: div-proc }
+    NS@{ shape: div-proc }
+    NP@{ shape: procs }
     style NSA color:#2962FF
     style NC color:#2962FF
-    style NS color:#2962FF
-    style VN stroke-width:2px,stroke-dasharray: 0,color:#FF6D00
-    style NP stroke-width:2px,stroke-dasharray: 2,color:#FFD600
-    style VW stroke-width:2px,stroke-dasharray: 0,color:#FF6D00
+    style NS color:#FF6D00
+    style VN color:#FF6D00
+    style NP stroke-dasharray: 2,color:#FFD600
+    style VW color:#FF6D00
     style VC color:#AA00FF
     style VR color:#AA00FF
     style VG color:#AA00FF
