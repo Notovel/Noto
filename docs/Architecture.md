@@ -8,9 +8,9 @@ config:
   look: classic
 ---
 flowchart TB
-    NSA("noto:sandbox") --> NC("novo:core")
-    NC --> NS("novo:server") & VN["vel:native"]
-    NS -.-> NP("novo:protocol")
+    NSA("noto:sandbox") --> NC("noto:core")
+    NC --> NS("noto:server") & VN["vel:native"]
+    NS -.-> NP("noto:protocol")
     NP -.-> VW["vel:web"]
     VC("vel:core") --> VW & VN
     VR("vel:render") --> VG("vel:gui")
