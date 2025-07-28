@@ -73,6 +73,8 @@ fn index() -> content::RawHtml<&'static str> {
 <div id="output"></div>
 
 <script type="module">
+    import init, { greet, add } from '/static/vel-web.js'; 
+
     const isSecure = location.protocol === 'https:';
     const statusElement = document.getElementById('security-status');
     const detailsElement = document.getElementById('security-details');
@@ -87,7 +89,6 @@ fn index() -> content::RawHtml<&'static str> {
     
     
     async function run() {
-        import init, { greet, add } from '/static/wasm_app.js';
         try {
             await init();
             console.log('WASM module loaded successfully!');
