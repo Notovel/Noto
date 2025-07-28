@@ -72,7 +72,7 @@ fn index() -> content::RawHtml<&'static str> {
 
 <div id="output"></div>
 
-<script>
+<script type="module">
     const isSecure = location.protocol === 'https:';
     const statusElement = document.getElementById('security-status');
     const detailsElement = document.getElementById('security-details');
@@ -85,9 +85,9 @@ fn index() -> content::RawHtml<&'static str> {
         detailsElement.textContent = 'Running in development mode. In production, use HTTPS for security.';
     }
     
-    import init, { greet, add } from '/static/wasm_app.js';
     
     async function run() {
+        import init, { greet, add } from '/static/wasm_app.js';
         try {
             await init();
             console.log('WASM module loaded successfully!');
