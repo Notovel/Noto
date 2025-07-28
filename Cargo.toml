@@ -1,8 +1,0 @@
-[workspace]
-resolver = "2"
-members = [
-    "vel-web",
-    "vel-native"
-]
-
-default-members = [ "vel-native" ]

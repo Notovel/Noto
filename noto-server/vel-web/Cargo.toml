@@ -1,0 +1,14 @@
+[package]
+name = "vel-web"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+web-sys = "0.3"
+
+[dependencies.js-sys]
+version = "0.3"
