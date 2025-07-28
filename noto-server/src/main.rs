@@ -73,7 +73,7 @@ fn index() -> content::RawHtml<&'static str> {
 <div id="output"></div>
 
 <script type="module">
-    import init, { greet, add } from '/static/vel-web.js'; 
+    import init, { greet, add } from '/static/vel_web.js'; 
 
     const isSecure = location.protocol === 'https:';
     const statusElement = document.getElementById('security-status');
