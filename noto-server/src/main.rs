@@ -98,18 +98,18 @@ fn index() -> content::RawHtml<&'static str> {
             
             document.getElementById('greet-button').addEventListener('click', () => {
                 const result = greet('Rocket + WebAssembly + TLS');
-                output.innerHTML = '<p>Greeting: ${result}</p>';
+                output.innerHTML = "<p>Greeting: " + result + "</p>";
             });
             
             document.getElementById('add-button').addEventListener('click', () => {
                 const result = add(5, 3);
-                output.innerHTML = '<p>5 + 3 = ${result}</p>';
+                output.innerHTML = "<p>5 + 3 = " + result + "</p>";
             });
             
         } catch (error) {
             console.error('Failed to load WASM module:', error);
             document.getElementById('output').innerHTML = 
-                '<p style="color: red;">❌ Failed to load WASM: ${error}</p>';
+                "<p style=\"color: red;\">❌ Failed to load WASM: " + error + "</p>";
         }
     }
     
