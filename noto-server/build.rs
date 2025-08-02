@@ -13,6 +13,8 @@ fn main() {
     // Tell Cargo to rerun this build script if WASM sources change
     println!("cargo:rerun-if-changed=vel-web/src");
     println!("cargo:rerun-if-changed=vel-web/Cargo.toml");
+    println!("cargo:rerun-if-changed=vel-web/sites/**");
+    println!("cargo:rerun-if-changed=Rocket.toml");
 
     // Check if wasm-pack is available
     let wasm_pack_check = Command::new("wasm-pack").arg("--version").output();
@@ -63,7 +65,7 @@ fn main() {
     }
 
     // Optional: Copy static files to target directory for easier deployment
-    let target_dir = Path::new(&manifest_dir).join("target").join(profile);
+    let mut target_dir = Path::new(&manifest_dir).join("target").join(profile);
     let static_dir = target_dir.join("static");
 
     if let Err(e) = fs::create_dir_all(&static_dir) {
@@ -73,6 +75,32 @@ fn main() {
         if let Err(e) = copy_dir_all(&pkg_dir, &static_dir) {
             println!("cargo:warning=Failed to copy WASM files: {}", e);
         }
+    }
+
+    let sites_dir = wasm_app_dir.join("sites");
+    if !sites_dir.exists() {
+        println!(
+            "cargo:error=Can not find sites folder! Try creating a folder calles 'sites' in the vel-web directory"
+        );
+    }
+
+    target_dir.push("sites");
+
+    // Copy sites dir to target dir for easier access
+    if let Err(e) = fs::create_dir_all(&target_dir) {
+        println!("cargo:warning=Failed to create sites directory: {}", e);
+    } else {
+        if let Err(e) = copy_dir_all(&sites_dir, &target_dir) {
+            println!("cargo:warning=Failed to copy sites: {}", e);
+        }
+    }
+
+    target_dir.pop();
+
+    let rocket_toml = Path::new("Rocket.toml");
+    if rocket_toml.exists() {
+        fs::copy(rocket_toml, &target_dir.join("Rocket.toml"))
+            .expect("Could not copy Rocket config");
     }
 }
 

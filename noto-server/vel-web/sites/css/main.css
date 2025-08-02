@@ -1,0 +1,92 @@
+.bg {
+    border-radius: 15px;
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.bg.primary {
+    background: #303030;
+    color: #FFFFFF;
+}
+
+.bg.secondary {
+    background: #505050;
+    color: #FFFFFF;
+}
+
+.bg.tertiary {
+    background: #707070;
+    color: #FFFFFF;
+}
+
+.bg.quaternary {
+    background: #A0A0A0;
+    color: #000000;
+}
+
+.fg.ok {
+    color: green;
+}
+
+.fg.warn {
+    color: orange;
+}
+
+button {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button.primary {
+    background: #0043a3;
+    color: white;
+}
+
+button.primary:hover {
+    background: #004aae;
+}
+
+button.secondary {
+    background: #806300;
+    color: white;
+}
+
+button.secondary:hover {
+    background: #907000;
+}
+
+.bg.output {
+    margin-top: 20px;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    min-height: 50px;
+}
+
+.bg.info {
+    background: #e8f4fd;
+    border: 1px solid #bee5eb;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
