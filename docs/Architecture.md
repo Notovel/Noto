@@ -1,12 +1,6 @@
 # Noto Project Structure
 
 ```mermaid
----
-config:
-  theme: redux-dark
-  layout: fixed
-  look: classic
----
 flowchart TB
     NSA("noto:sandbox") --> NC("noto:core")
     NC --> NS("noto:server") & VN["vel:native"]

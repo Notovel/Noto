@@ -1,5 +1,5 @@
 [package]
-name = "vel-core"
+name = "vel-render"
 version = "0.1.0"
 edition = "2024"
 
