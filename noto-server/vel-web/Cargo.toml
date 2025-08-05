@@ -15,3 +15,4 @@ version = "0.3"
 
 [dependencies.vel-core]
 path = "../../crates/vel-core"
+features = [ "web" ]

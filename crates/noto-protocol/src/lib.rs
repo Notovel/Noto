@@ -1,3 +1,3 @@
-fn main() {
-    println!("Hello, world!");
+fn greet() -> &'static str {
+    "Hello, noto-protocol!"
 }

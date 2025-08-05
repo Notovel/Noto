@@ -1,3 +1,3 @@
-pub mod lsp;
-pub mod search;
-pub mod syntax;
+fn greet() -> &'static str {
+    "Hello, noto-core!"
+}
