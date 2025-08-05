@@ -1,0 +1,10 @@
+[package]
+name = "noto-core"
+version = "0.1.0"
+edition = "2024"
+default-features = []
+
+[dependencies]
+
+[dependencies.noto-sandbox]
+path = "../noto-sandbox"

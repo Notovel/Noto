@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{server_name}} - Login</title>
+  <link rel="stylesheet" href="/res/css/main.css">
+</head>
+
+<body class="bg primary">
+  <h1 class="bg secondary">Login</h1>
+  <form>
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="fname" placeholder="Snutt"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password">
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>

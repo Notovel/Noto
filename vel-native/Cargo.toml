@@ -1,0 +1,11 @@
+[package]
+name = "vel-native"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies.noto-core]
+path = "../crates/noto-core"
+
+[dependencies.vel-core]
+path = "../crates/vel-core"
+features = [ ]

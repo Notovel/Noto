@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rust WASM App for {{user_name}}</title>
+    <link rel="stylesheet" href="/res/css/main.css">
+</head>
+
+<body class="bg primary">
+    <h1 class="noselect">🚀 Rust WASM + Rocket Server</h1>
+
+
+    <div class="bg info">
+        <h3 id="security-status" class="noselect">🔍 Checking connection security...</h3>
+        <p id="security-details"></p>
+    </div>
+
+    <p>This WASM app was automatically built by the Rust build script!</p>
+
+    <button id="greet-button" class="noselect primary">Say Hello</button>
+    <button id="add-button" class="noselect secondary">Add Numbers (5 + 3)</button>
+
+    <div id="output" class="bg output"></div>
+
+    <script type="module">
+        import init, {greet, add} from '/res/wasm/vel_web.js';
+
+        const isSecure = location.protocol === 'https:';
+        const statusElement = document.getElementById('security-status');
+        const detailsElement = document.getElementById('security-details');
+
+        if (isSecure) {
+            statusElement.innerHTML = '🔒 <span class="secure">Secure HTTPS Connection</span>';
+            detailsElement.textContent = 'Your connection is encrypted and secure.';
+        } else {
+            statusElement.innerHTML = '⚠️ <span class="insecure">HTTP Connection</span>';
+            detailsElement.textContent = 'Running in development mode. In production, use HTTPS for security.';
+        }
+
+
+        async function run() {
+            try {
+                await init();
+                console.log('WASM module loaded successfully!');
+
+                const output = document.getElementById('output');
+                output.innerHTML = '<p>✅ WASM module loaded and ready!</p>';
+
+                document.getElementById('greet-button').addEventListener('click', () => {
+                    const result = greet('Rocket + WebAssembly + TLS');
+                    output.innerHTML = "<p>Greeting: " + result + "</p>";
+                });
+
+                document.getElementById('add-button').addEventListener('click', () => {
+                    const result = add(5, 3);
+                    output.innerHTML = "<p>5 + 3 = " + result + "</p>";
+                });
+
+            } catch (error) {
+                console.error('Failed to load WASM module:', error);
+                document.getElementById('output').innerHTML =
+                    "<p style=\"color: red;\">❌ Failed to load WASM: " + error + "</p>";
+            }
+        }
+
+        run();
+    </script>
+</body>
+
+</html>
